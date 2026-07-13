@@ -1,0 +1,7 @@
+target/
+karate-reports/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
