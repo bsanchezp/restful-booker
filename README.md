@@ -6,7 +6,6 @@ Suite de pruebas automatizadas para la API de Usuarios de [ServeRest](https://se
 
 - Java 11 o superior
 - Maven 3.6+
-- Conexión a internet (la API de ServeRest es un servicio público en línea)
 
 ## 2. Estructura del proyecto
 
@@ -27,8 +26,9 @@ karate-serverest-usuarios/
             ├── schemas/
             │   ├── schema-usuario.json
             │   ├── schema-listar-usuarios.json
-            │   ├── schema-mensagem.json
-            │   └── schema-criar-usuario.json
+            │   ├── schema-mensage-error.json
+            │   ├── schema-mensagen.json
+            │   └── schema-crear-usuario.json
             └── usuarios/
                 ├── listar-usuarios.feature
                 ├── crear-usuario.feature

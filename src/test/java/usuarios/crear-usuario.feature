@@ -20,7 +20,7 @@ Feature: Registrar usuario
     And match response.message == 'Cadastro realizado com sucesso'
 
 
-  @negativo1
+  @negativo
   Scenario: No permitir registrar un usuario con un email ya utilizado
     * def usuarioNuevo = datosHelper()
 
@@ -36,7 +36,7 @@ Feature: Registrar usuario
     Then status 400
     And match response.message == 'Este email já está sendo usado'
 
-  @negativo1
+  @negativo
   Scenario Outline: No permitir registrar un usuario con campos obligatorios faltantes
     * def usuarioIncompleto = <usuario>
     Given path 'usuarios'

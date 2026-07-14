@@ -42,11 +42,5 @@ Se priorizaron los errores de negocio más representativos de la API:
 ## 6. Limitaciones y consideraciones
 
 - ServeRest es un servicio público compartido; los tests no controlan el estado inicial de la base de datos, por lo que se evita depender de datos fijos y se generan usuarios propios en cada corrida.
-- El comportamiento de `PUT` sobre un ID inexistente (si crea un registro nuevo y con qué código de estado) puede variar según la versión del servicio; el escenario correspondiente usa una aserción flexible y queda documentado como caso a confirmar contra el ambiente real antes de un pipeline de CI estricto.
-- No se implementó limpieza automática (cleanup) de usuarios creados fuera de los escenarios que ya eliminan sus propios datos (`crear-usuario.feature`, `listar-usuarios.feature`), dado que ServeRest resetea periódicamente su base de datos. En un entorno productivo propio se recomendaría agregar un `Background`/hook de limpieza (`afterScenario` en `karate-config.js`) para eliminar los usuarios creados en cada corrida.
+- El comportamiento de `PUT` sobre un ID inexistente (si crea un registro nuevo y con qué código de estado) puede variar según la versión del servicio; el escenario correspondiente usa una aserción flexible.
 
-## 7. Próximos pasos sugeridos
-
-- Integrar la ejecución en un pipeline CI (GitHub Actions) que corra `mvn test` en cada push y publique el reporte HTML como artefacto.
-- Agregar cobertura para los demás módulos de ServeRest (login, productos, carritos) siguiendo el mismo patrón de carpetas.
-- Incorporar pruebas de contrato más estrictas (por ejemplo, con `karate-junit5` + Pact) si la API pasa a tener múltiples consumidores.

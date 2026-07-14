@@ -10,7 +10,6 @@ function fn() {
   };
 
   // Se pueden agregar variaciones de URL por ambiente si en el futuro
-  // se dispone de un servidor de staging o mock propio.
   if (env === 'qa') {
     config.baseUrl = 'https://serverest.dev';
   }

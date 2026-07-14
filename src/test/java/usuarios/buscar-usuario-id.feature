@@ -28,7 +28,7 @@ Feature: Buscar usuario por ID
     And match response.nome == usuarioNuevo.nome
     And match response.email == usuarioNuevo.email
 
-  @negativo2
+  @negativo
   Scenario: Buscar un usuario con un ID que no existe
     Given path 'usuarios', 'jogfODIlXsqxNFS2'
     When method GET
@@ -36,7 +36,7 @@ Feature: Buscar usuario por ID
     And match response == schemaMensaje
     And match response.message == 'Usuário não encontrado'
 
-  @negativo2
+  @negativo
   Scenario: Buscar un usuario con un ID que supera la cantidad de caracteres
     Given path 'usuarios', 'idQueNoExiste123456'
     When method GET
