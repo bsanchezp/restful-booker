@@ -1,4 +1,4 @@
 {
   "quantidade": "#number",
-  "usuarios": "#array"
+  "usuarios": "#[] #(schemaUsuario)"
 }

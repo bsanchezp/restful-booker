@@ -7,9 +7,9 @@ Feature: Eliminar usuario
   Background:
     * url baseUrl
     * def datosHelper = read('classpath:helpers/usuario-data.js')
-    * def schemaMensaje = read('classpath:schemas/schema-mensagem.json')
+    * def schemaMensaje = read('classpath:schemas/schema-mensagen.json')
 
-  @positivo
+  @positivo4
   Scenario: Eliminar un usuario existente
     * def usuarioNuevo = datosHelper()
     Given path 'usuarios'
@@ -30,9 +30,21 @@ Feature: Eliminar usuario
     Then status 400
     And match response.message == 'Usuário não encontrado'
 
-  @negativo
+  @negativo4
   Scenario: Eliminar un usuario con un ID inexistente no produce error
     Given path 'usuarios', 'idQueNoExiste112233'
     When method DELETE
     Then status 200
+    And match response == schemaMensaje
     And match response.message == 'Nenhum registro excluído'
+
+
+  @negativo4
+  Scenario: Eliminar un usuario con carrito registrado
+    Given path 'usuarios', '0uxuPY0cbmQhpEz1'
+    When method DELETE
+    Then status 400
+    And match response.message == '#string'
+    And match response.idCarrinho == '#string'
+    And match response.message == 'Não é permitido excluir usuário com carrinho cadastrado'
+

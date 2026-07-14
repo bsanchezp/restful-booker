@@ -7,6 +7,7 @@ Feature: Listar usuarios
   Background:
     * url baseUrl
     * def schemaListado = read('classpath:schemas/schema-listar-usuarios.json')
+    * def schemaUsuario = read('classpath:schemas/schema-usuario.json')
 
   @positivo
   Scenario: Obtener la lista completa de usuarios exitosamente
@@ -14,8 +15,7 @@ Feature: Listar usuarios
     When method GET
     Then status 200
     And match response == schemaListado
-    And match response.quantidade == '#number'
-    And match response.usuarios == '#array'
+
 
   @positivo
   Scenario: Filtrar usuarios por nombre mediante query param
@@ -37,7 +37,7 @@ Feature: Listar usuarios
   @negativo
   Scenario: Filtrar por un nombre que no existe devuelve lista vacia
     Given path 'usuarios'
-    And param nome = 'NombreQueSeguramenteNoExiste_zzz'
+    And param nome = 'Ditis'
     When method GET
     Then status 200
     And match response.quantidade == 0

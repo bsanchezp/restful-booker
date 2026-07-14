@@ -7,7 +7,7 @@ Feature: Registrar usuario
   Background:
     * url baseUrl
     * def datosHelper = read('classpath:helpers/usuario-data.js')
-    * def schemaCreacion = read('classpath:schemas/schema-criar-usuario.json')
+    * def schemaCreacion = read('classpath:schemas/schema-crear-usuario.json')
 
   @positivo
   Scenario: Registrar un nuevo usuario con datos validos
@@ -18,9 +18,9 @@ Feature: Registrar usuario
     Then status 201
     And match response == schemaCreacion
     And match response.message == 'Cadastro realizado com sucesso'
-    And match response._id == '#string'
 
-  @negativo
+
+  @negativo1
   Scenario: No permitir registrar un usuario con un email ya utilizado
     * def usuarioNuevo = datosHelper()
 
@@ -36,17 +36,18 @@ Feature: Registrar usuario
     Then status 400
     And match response.message == 'Este email já está sendo usado'
 
-  @negativo
+  @negativo1
   Scenario Outline: No permitir registrar un usuario con campos obligatorios faltantes
     * def usuarioIncompleto = <usuario>
     Given path 'usuarios'
     And request usuarioIncompleto
     When method POST
     Then status 400
+    And match response[<campo>] == <mensaje>
 
     Examples:
-      | usuario |
-      | { "email": "sinnombre@teste.com", "password": "Senha@123", "administrador": "true" } |
-      | { "nome": "Usuario Sin Email", "password": "Senha@123", "administrador": "true" } |
-      | { "nome": "Usuario Sin Password", "email": "sinpassword@teste.com", "administrador": "true" } |
-      | { "nome": "Usuario Sin Administrador", "email": "sinadmin@teste.com", "password": "Senha@123" } |
+      | usuario                                                                                                 | campo           | mensaje                         |
+      | { "email": "sinnombre@teste.com", "password": "Senha@123", "administrador": "true" }                    | 'nome'          | 'nome é obrigatório'            |
+      | { "nome": "Usuario Sin Email", "password": "Senha@123", "administrador": "true" }                       | 'email'         | 'email é obrigatório'           |
+      | { "nome": "Usuario Sin Password", "email": "sinpassword@teste.com", "administrador": "true" }           | 'password'      | 'password é obrigatório'        |
+      | { "nome": "Usuario Sin Administrador", "email": "sinadmin@teste.com", "password": "Senha@123" }         | 'administrador' | 'administrador é obrigatório'   |

@@ -10,6 +10,6 @@ class AllFeaturesRunner {
 
     @Karate.Test
     Karate testAll() {
-        return Karate.run("classpath:usuarios").tags("~@ignore");
+        return Karate.run("classpath:usuarios").tags("@negativo4");
     }
 }

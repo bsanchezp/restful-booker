@@ -7,7 +7,7 @@ Feature: Actualizar usuario
   Background:
     * url baseUrl
     * def datosHelper = read('classpath:helpers/usuario-data.js')
-    * def schemaMensaje = read('classpath:schemas/schema-mensagem.json')
+    * def schemaMensaje = read('classpath:schemas/schema-mensagen.json')
 
   @positivo
   Scenario: Actualizar la informacion de un usuario existente
@@ -33,9 +33,6 @@ Feature: Actualizar usuario
     And match response.nome == usuarioActualizado.nome
     And match response.email == usuarioActualizado.email
 
-  # Nota: la API de ServeRest permite hacer PUT sobre un ID inexistente y en ese caso
-  # crea el registro (puede devolver 200 o 201 segun la version del servicio).
-  # Se deja documentado como caso especial a validar contra el ambiente real.
   @negativo
   Scenario: Actualizar un usuario con un ID inexistente crea un nuevo registro
     * def usuarioNuevo = datosHelper()
@@ -44,3 +41,37 @@ Feature: Actualizar usuario
     When method PUT
     Then match responseStatus == '#? _ == 200 || _ == 201'
     And match response.message == '#string'
+
+  @negativo
+  Scenario: No permitir actualizar un usuario con un correo ya registrado
+
+    # Crear usuario A
+    * def usuarioA = datosHelper()
+
+    Given path 'usuarios'
+    And request usuarioA
+    When method POST
+    Then status 201
+
+    * def idUsuarioA = response._id
+
+    # Crear usuario B
+    * def usuarioB = datosHelper()
+
+    Given path 'usuarios'
+    And request usuarioB
+    When method POST
+    Then status 201
+
+    * def idUsuarioB = response._id
+
+    # Preparar actualización
+    * copy usuarioActualizado = usuarioB
+    * set usuarioActualizado.email = usuarioA.email
+
+    Given path 'usuarios', idUsuarioB
+    And request usuarioActualizado
+    When method PUT
+    Then status 400
+    And match response == schemaMensaje
+    And match response.message == 'Este email já está sendo usado'
