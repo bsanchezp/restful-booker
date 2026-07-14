@@ -28,7 +28,7 @@ Esta separación facilita la escalabilidad: agregar un nuevo módulo (por ejempl
 - **Scenario Outline** para cubrir múltiples variantes de "campo faltante" en la creación de usuarios sin duplicar escenarios.
 - **Tags** (`@positivo`, `@negativo`, `@e2e`) para poder ejecutar subconjuntos de la suite según necesidad (por ejemplo, correr solo negativos en un pipeline de smoke test).
 - **Feature end-to-end independiente**: además de los tests unitarios por endpoint, se incluye un escenario que recorre el ciclo de vida completo de un usuario (crear → listar → buscar → actualizar → eliminar → confirmar eliminación), simulando el flujo real de un administrador.
-- **Aislamiento de datos entre corridas**: cada escenario crea sus propios datos de prueba y no depende de estado dejado por ejecuciones previas, lo cual es clave al correr contra una API compartida en línea.
+- **Aislamiento de datos entre corridas**: cada escenario crea sus propios datos de prueba y no depende de estado dejado por ejecuciones previas.
 
 ## 5. Cobertura de casos negativos
 
