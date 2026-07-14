@@ -9,6 +9,7 @@ Feature: Buscar usuario por ID
     * def datosHelper = read('classpath:helpers/usuario-data.js')
     * def schemaUsuario = read('classpath:schemas/schema-usuario.json')
     * def schemaMensaje = read('classpath:schemas/schema-mensagem.json')
+    * def schemaMesanjeError = read ('classpath:schemas/schema-mensagem-error.json')
 
   @positivo
   Scenario: Buscar un usuario existente por su ID
@@ -32,5 +33,5 @@ Feature: Buscar usuario por ID
     Given path 'usuarios', 'idQueNoExiste123456'
     When method GET
     Then status 400
-    And match response == schemaMensaje
-    And match response.message == 'Usuário não encontrado'
+    And match response == schemaMesanjeError
+    And match response.id == 'id deve ter exatamente 16 caracteres alfanuméricos'
